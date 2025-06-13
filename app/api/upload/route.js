@@ -41,7 +41,7 @@ export async function POST(req) {
 
         }))
 
-        const googleai = new Cha
+        const googleai = new ChatGoogleGenerativeAI
     } catch (error) {
 
     }
