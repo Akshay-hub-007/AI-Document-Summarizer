@@ -8,6 +8,7 @@ export default function Home() {
 
   const [loading,setLoading]=useState(false)
   const [upload,setUpload]=useState(null)
+  const [summary,setSummary]=useState()
   const [error,setError]=useState(null)
   const onDrop = useCallback(async (accecptedFiles) => {
       try {
@@ -20,13 +21,13 @@ export default function Home() {
           body:formData
          })
 
-         if(!responseCookiesToRequestCookies.ok)
+         if(!reponse.ok)
          {
           throw new Error("Failed to upload document");
   
          }
-
-         const data=await responseCookiesToRequestCookies.json();
+        console.log(reponse)
+         const data=await reponse.json();
          setSummary(data.summary);
          
       } catch (error) {
