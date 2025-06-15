@@ -40,17 +40,18 @@ export async function POST(req) {
         }));
        console.log(docsWithMetaData)
 
-        const googleai = new ChatGoogleGenerativeAI({model:"gemini-2.0-flash"});
+        const googleai = new ChatGoogleGenerativeAI({model:"gemini-2.0-flash"   });
 
         const summary = await googleai.invoke(
             `Summarize the following document: ${splitDocs[0].pageContent}`
         );
        
         const embedding = new GoogleGenerativeAIEmbeddings({
-            model: "models/gemini-embedding-exp-03-07",
-            apiKey: process.env.GOOGLE_API_KEY
+            model:"models/embedding-001",
+            apiKey: process.env.GOOGLE_API_KEY,
+            output_dimensionality: 1024,
         });
-
+        console.log(embedding)
         const index = pinecone.Index(process.env.PINECONE_INDEX_NAME);
           console.log("h")
         await PineconeStore.fromDocuments(docsWithMetaData, embedding, {

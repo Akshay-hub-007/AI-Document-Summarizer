@@ -28,7 +28,7 @@ export default function Home() {
          }
         console.log(reponse)
          const data=await reponse.json();
-         setSummary(data.summary);
+         setSummary(data.summary.kwargs.content);
          
       } catch (error) {
          setError(error.message)
@@ -79,7 +79,7 @@ export default function Home() {
           )}
 
           {summary && (
-            <Card>
+            <Card className={"p-4"}>
               <h2 className="text-xl font-semibold mb-4">Document Summary</h2>
               <p className="text-gray-700 dark:text-gray-300">{summary}</p>
             </Card>
