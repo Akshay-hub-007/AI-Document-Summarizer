@@ -39,7 +39,6 @@ export async function POST(req) {
                 documentId,
             }
         }));
-       console.log(docsWithMetaData)
 
         const googleai = new ChatGoogleGenerativeAI({model:"gemini-2.0-flash"   });
 
@@ -52,13 +51,10 @@ export async function POST(req) {
             apiKey: process.env.GOOGLE_API_KEY,
             output_dimensionality: 1024,
         });
-        console.log(embedding)
         const index = pinecone.Index(process.env.PINECONE_INDEX_NAME);
-          console.log("h")
         await PineconeStore.fromDocuments(docsWithMetaData, embedding, {
             pineconeIndex: index
         });
-      console.log("h")
         return NextResponse.json({
             summary,
             documentId,

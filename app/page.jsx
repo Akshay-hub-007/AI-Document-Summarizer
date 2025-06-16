@@ -6,6 +6,7 @@ import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { DocumentHistory } from "@/components/DocumentHistory";
 import { ChatInterface } from "@/components/ChatInterface";
+import { ThemeToggle } from "@/components/ThemeToggle";
 export default function Home() {
 
   const [loading, setLoading] = useState(false)
@@ -29,9 +30,7 @@ export default function Home() {
         throw new Error("Failed to upload document");
 
       }
-      console.log(reponse.body)
       const data = await reponse.json();
-      console.log(data)
       setSummary(data.summary.kwargs.content);
       const newDoc = {
         id: data.documentId,
@@ -58,7 +57,6 @@ export default function Home() {
   const handleMessage = async (message, documentId) => {
     try {
       setLoading(true)
-      console.log(message)
       const response = await fetch("/api/question", {
         method: "POST",
         body: JSON.stringify({
@@ -95,10 +93,10 @@ export default function Home() {
   }
   return (
     <div className="container mx-auto p-4">
-      <div className="flex justify-center items-center mb-8">
+      <div className="flex justify-center items-center mb-8 space-x-8">
         <h1 className="text-3xl font-bold">AI Document summarizer</h1>
         <div>
-
+            <ThemeToggle/>
         </div>
       </div>
 

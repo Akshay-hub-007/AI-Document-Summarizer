@@ -12,7 +12,6 @@ const pinecone = new Pinecone({
 export async function POST(req) {
     try {
         const { question, documentId } = await req.json()
-        console.log(question, documentId)
         if (!question.trim() || !documentId) {
             return new Response("Missing question or documentId", { status: 400 })
         }
@@ -38,7 +37,6 @@ export async function POST(req) {
 
 
         const contentText = results.map((r) => r.pageContent).join("\n\n")
-        console.log(contentText)
         const googleai = new ChatGoogleGenerativeAI({ model: "gemini-2.0-flash" });
 const prompt = `
 You are a helpful and intelligent AI assistant.
@@ -62,11 +60,9 @@ ${question}
 `;
 
 
-        console.log("object")
 
 
         const response = await googleai.invoke(prompt)
-        console.log(response)
         return NextResponse.json({
             answer: response.content
         })

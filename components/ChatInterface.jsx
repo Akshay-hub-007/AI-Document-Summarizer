@@ -10,6 +10,11 @@ export function ChatInterface({ onSendMessage, loading, currentDocument }) {
     const [message, setMessages] = useState([])
     const [input, setInput] = useState("")
     const scrollRef = useRef(null)
+    const bottomRef = useRef(null)
+
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" })
+    }, [message])
 
     const handleSend = async () => {
         if (!input.trim() || loading || !currentDocument) return
@@ -26,7 +31,6 @@ export function ChatInterface({ onSendMessage, loading, currentDocument }) {
         setInput("")
 
         const aiResponse = await onSendMessage(input, currentDocument.id)
-        console.log(aiResponse)
 
         const aiMessage = {
             id: crypto.randomUUID(),
@@ -107,6 +111,7 @@ export function ChatInterface({ onSendMessage, loading, currentDocument }) {
                             <div className="text-xs text-muted-foreground">
                                 {new Date(msg.timestamp).toLocaleString()}
                             </div>
+                            <div ref={bottomRef} />
                         </div>
                     ))}
                 </div>
