@@ -1,10 +1,11 @@
 "use client"
 
 import { Card } from "@/components/ui/card";
-import { ChatInterface } from "@/components/ui/ChatInterface";
 import { Loader, Upload } from "lucide-react";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { DocumentHistory } from "@/components/DocumentHistory";
+import { ChatInterface } from "@/components/ChatInterface";
 export default function Home() {
 
   const [loading, setLoading] = useState(false)
@@ -76,6 +77,22 @@ export default function Home() {
 
     }
   }
+
+  const handleDocumentSelect = (documentId) => {
+    // const doc=documents.map((doc)=>{
+
+    //   if(doc?.id==documentId)
+    //   {
+    //      setCurrentDocument(doc)
+    //   }
+
+    // })
+    const docs = documents.find((doc) => doc?.id == documentId)
+    if (docs) {
+      setCurrentDocument(docs)
+    }
+
+  }
   return (
     <div className="container mx-auto p-4">
       <div className="flex justify-center items-center mb-8">
@@ -86,7 +103,7 @@ export default function Home() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-3">
+        <div className="md:col-span-2">
           <Card className={"p-6 mb-8"}>
             <div
               {...getRootProps()}
@@ -124,6 +141,14 @@ export default function Home() {
             onSendMessage={handleMessage}
             loading={loading}
             currentDocument={currentDocument}
+          />
+
+        </div>
+        <div>
+          <DocumentHistory
+            documents={documents}
+            onSelect={handleDocumentSelect}
+            currentId={currentDocument?.id}
           />
         </div>
       </div>

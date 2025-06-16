@@ -1,9 +1,9 @@
 import { FileText, Loader2, Send } from "lucide-react"
-import { Card } from "./card"
+import { Card } from "./ui/card"
 import { Button } from "@/components/ui/button"
-import { Input } from "./input"
+import { Input } from "./ui/input"
 import { ScrollArea } from "@radix-ui/react-scroll-area"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 
 export function ChatInterface({ onSendMessage, loading, currentDocument }) {
@@ -39,6 +39,30 @@ export function ChatInterface({ onSendMessage, loading, currentDocument }) {
         setMessages((prev) => [...prev, aiMessage])
     }
 
+    const getChatHistory = (documentId) => {
+        const history = localStorage.getItem(`chat-history-${documentId}`);
+        return history ? JSON.parse(history) : [];
+    };
+
+    //Helper function to save chat history to local storage
+    const saveChatHistory = (documentId, history) => {
+        localStorage.setItem(`chat-history-${documentId}`, JSON.stringify(history));
+    };
+    useEffect(() => {
+        if (currentDocument?.id) {
+            const history = getChatHistory(currentDocument.id);
+            setMessages(history);
+        } else {
+            setMessages([]);
+        }
+    }, [currentDocument]);
+
+    //Save chat history when messages change
+    useEffect(() => {
+        if (currentDocument?.id) {
+            saveChatHistory(currentDocument.id, message);
+        }
+    }, [message, currentDocument]);
     return (
         <Card className="p-4 space-y-4">
             {currentDocument ? (
@@ -52,7 +76,7 @@ export function ChatInterface({ onSendMessage, loading, currentDocument }) {
                         </div>
                         {message.length > 0 && (
                             <Button
-                                variant="outline"
+                                variant="ghost"
                                 size="sm"
                                 onClick={() => setMessages([])}
                             >
