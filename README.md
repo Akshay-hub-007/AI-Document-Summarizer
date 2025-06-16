@@ -33,5 +33,5 @@ A lightweight **RAG (Retrieval-Augmented Generation)** application built with **
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/Akshay-hub-007/rag-docs-app.git
-cd rag-docs-app
+git clone https://github.com/Akshay-hub-007/AI-Document-Summarizer.git
+
