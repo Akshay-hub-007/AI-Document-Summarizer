@@ -38,20 +38,21 @@ export async function POST(req) {
 
 
         const contentText = results.map((r) => r.pageContent).join("\n\n")
+        console.log(contentText)
         const googleai = new ChatGoogleGenerativeAI({ model: "gemini-2.0-flash" });
-
-        const prompt = `
+const prompt = `
 You are a helpful and intelligent AI assistant.
 
 Using the following document content, answer the user's question as clearly, accurately, and concisely as possible.
 
-If needed, format the response with:
-- Headings (using **bold** or ALL CAPS)
-- Bullet points or numbered lists
-- Paragraphs for detailed explanations
-- Line breaks to separate sections for better readability
+When formatting your response:
+- Remove any asterisks (e.g., **text**) and instead apply appropriate formatting
+- Use <strong> for bold or headings
+- Use <p> for paragraphs
+- Use <a href=""> for links (make them clickable) blue color text
+- Use line breaks or lists where needed for clarity
 
-If the answer is not found in the content, say "I don't know."
+If the answer is not found in the content, respond with: <p>I don't know.</p>
 
 --- Document Content ---
 ${contentText}

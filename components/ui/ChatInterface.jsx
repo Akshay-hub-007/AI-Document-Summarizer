@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "./input"
 import { ScrollArea } from "@radix-ui/react-scroll-area"
 import { useRef, useState } from "react"
+import Link from "next/link"
 
 export function ChatInterface({ onSendMessage, loading, currentDocument }) {
     const [message, setMessages] = useState([])
@@ -69,13 +70,16 @@ export function ChatInterface({ onSendMessage, loading, currentDocument }) {
             <ScrollArea className="h-96 overflow-y-auto px-1">
                 <div className="space-y-4">
                     {message.map((msg) => (
+
                         <div key={msg.id} className="text-sm space-y-1">
                             <div className={`font-semibold ${msg.role === "user" ? "text-blue-600" : "text-green-600"}`}>
                                 {msg.role === "user" ? "You" : "AI"}
                             </div>
-                            <div className="bg-muted rounded-lg p-4 text-sm leading-relaxed text-foreground border">
-                                {msg.content}
-                            </div>
+                            <div
+                                className="bg-muted rounded-lg p-4 text-sm leading-relaxed text-foreground border"
+                                dangerouslySetInnerHTML={{ __html: msg.content }}
+                            />
+
                             <div className="text-xs text-muted-foreground">
                                 {new Date(msg.timestamp).toLocaleString()}
                             </div>

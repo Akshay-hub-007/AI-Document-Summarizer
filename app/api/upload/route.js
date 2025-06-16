@@ -1,5 +1,6 @@
 import { Pinecone } from "@pinecone-database/pinecone"
-import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf"
+import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
+
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters"
 import { ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings } from "@langchain/google-genai"
 import { PineconeStore } from "@langchain/pinecone"
